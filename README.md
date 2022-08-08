@@ -1,0 +1,1 @@
+This repository contains all the client and serverside code for my Final Year Project, PWABook which is a full stack social media application built using the MERN stack (MongoDB, Express, React, Node) and turned into a Progressive Web Appication.
