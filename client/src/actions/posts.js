@@ -1,5 +1,5 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from "../constants/actionTypes";
-import * as api from "../api";
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import * as api from '../api';
 
 // Action Creators, these are functions that return an action, which are objects with type and payload
 export const getPosts = () => async (dispatch) => {

@@ -1,11 +1,11 @@
-import React from "react";
-import { AppBar, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { AppBar, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-import useStyles from "./styles";
-import logo from "../../images/blog.png";
+import useStyles from './styles';
+import logo from '../../images/blog.png';
 
-const Navbar = () => {
+function Navbar() {
   const classes = useStyles();
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">
@@ -17,6 +17,6 @@ const Navbar = () => {
       </div>
     </AppBar>
   );
-};
+}
 
 export default Navbar;

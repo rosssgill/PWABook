@@ -1,4 +1,5 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from "../constants/actionTypes";
+/* eslint-disable default-param-last */
+import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 // Reducers normally take arguments of (state, action), in our case the state is always posts since we're inside posts reducer.
 // They always need to return something so we set a default parameter as an empty array
 export default (posts = [], action) => {

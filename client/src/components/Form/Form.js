@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { TextField, Button, Typography, Paper } from "@material-ui/core";
-import FileBase from "react-file-base64";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import FileBase from 'react-file-base64';
+import { useDispatch, useSelector } from 'react-redux';
 
-import useStyles from "./styles";
-import { createPost, updatePost } from "../../actions/posts.js";
+import useStyles from './styles';
+import { createPost, updatePost } from '../../actions/posts.js';
 
 const defaultPostData = {
-  creator: "",
-  title: "",
-  message: "",
-  tags: "",
-  selectedFile: "",
+  creator: '',
+  title: '',
+  message: '',
+  tags: '',
+  selectedFile: '',
 };
 
-const Form = ({ currentId, setCurrentId }) => {
+function Form({ currentId, setCurrentId }) {
   const [postData, setPostData] = useState(defaultPostData);
 
   const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null));
@@ -24,6 +24,11 @@ const Form = ({ currentId, setCurrentId }) => {
   useEffect(() => {
     if (post) setPostData(post);
   }, [post]);
+
+  const clear = () => {
+    setCurrentId(null);
+    setPostData(defaultPostData);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent refresh in browser
@@ -37,15 +42,10 @@ const Form = ({ currentId, setCurrentId }) => {
     clear();
   };
 
-  const clear = () => {
-    setCurrentId(null);
-    setPostData(defaultPostData);
-  };
-
   return (
     <Paper className={classes.paper}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
-        <Typography variant="h6">{currentId ? "Editing" : "Create"} post</Typography>
+        <Typography variant="h6">{currentId ? 'Editing' : 'Create'} post</Typography>
         <TextField
           name="creator"
           variant="outlined"
@@ -76,7 +76,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(event) => setPostData({ ...postData, tags: event.target.value.split(",") })}
+          onChange={(event) => setPostData({ ...postData, tags: event.target.value.split(',') })}
         />
         <div className={classes.fileInput}>
           <FileBase
@@ -101,6 +101,6 @@ const Form = ({ currentId, setCurrentId }) => {
       </form>
     </Paper>
   );
-};
+}
 
 export default Form;
