@@ -52,6 +52,6 @@
     "react/no-array-index-key": 0,
     "import/no-named-as-default": "off",
     "import/no-named-as-default-member": "off",
-    "max-len": [2, 500]
+    "max-len": [2, 120]
   }
 }
