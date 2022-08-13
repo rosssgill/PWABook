@@ -8,7 +8,9 @@ import decode from 'jwt-decode';
 
 import Input from './Input';
 import useStyles from './styles';
-import Icon from './Icon';
+import { signin, signup } from '../../actions/auth';
+
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
 function Auth() {
   const classes = useStyles();
@@ -17,12 +19,23 @@ function Auth() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [isSignedUp, setIsSignedUp] = useState(false);
+  const [formData, setFormData] = useState(initialState);
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleChange = () => {};
+    if (isSignedUp) {
+      dispatch(signin(formData, navigate)); // Passing navigate so we can navigate when something happens
+    } else {
+      dispatch(signup(formData, navigate));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const switchForm = () => {
     setIsSignedUp((prevIsSignedUp) => !prevIsSignedUp);
@@ -70,11 +83,10 @@ function Auth() {
               handleShowPassword={handleShowPassword}
             />
             {!isSignedUp ? (
-              <Input name="confirm" label="Repeat Password" handleChange={handleChange} type="password" />
+              <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />
             ) : null}
           </Grid>
           <GoogleLogin onSuccess={googleSuccess} onError={googleFailure} />
-
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {!isSignedUp ? 'Sign Up' : 'Sign In'}
           </Button>

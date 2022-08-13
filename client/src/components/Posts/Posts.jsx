@@ -9,7 +9,7 @@ function Posts({ setCurrentId }) {
   const posts = useSelector((state) => state.posts);
   const classes = useStyles();
 
-  console.log(posts);
+  // console.log(posts);
 
   return (
     // If there are no posts show the circular progress bar, else populate a grid with the posts

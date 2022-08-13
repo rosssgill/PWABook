@@ -7,7 +7,6 @@ import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts.js';
 
 const defaultPostData = {
-  creator: '',
   title: '',
   message: '',
   tags: '',
@@ -20,6 +19,7 @@ function Form({ currentId, setCurrentId }) {
   const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null));
   const classes = useStyles();
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem('profile'));
 
   useEffect(() => {
     if (post) setPostData(post);
@@ -33,27 +33,29 @@ function Form({ currentId, setCurrentId }) {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent refresh in browser
 
-    if (currentId) {
-      dispatch(updatePost(currentId, postData));
+    if (currentId === 0) {
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     } else {
-      dispatch(createPost(postData));
+      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
     }
 
     clear();
   };
 
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant="h6" align="center">
+          Sign in to create and like posts
+        </Typography>
+      </Paper>
+    );
+  }
+
   return (
     <Paper className={classes.paper}>
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
         <Typography variant="h6">{currentId ? 'Editing' : 'Create'} post</Typography>
-        <TextField
-          name="creator"
-          variant="outlined"
-          label="Creator"
-          fullWidth
-          value={postData.creator}
-          onChange={(event) => setPostData({ ...postData, creator: event.target.value })}
-        />
         <TextField
           name="title"
           variant="outlined"

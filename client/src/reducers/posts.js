@@ -9,12 +9,14 @@ export default (posts = [], action) => {
     case CREATE:
       return [...posts, action.payload]; // Spreading old posts into a new array and adding the new post from payload
     case UPDATE:
-    case LIKE:
       // Return updated post from payload if it is different, else return original post
       return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
     case DELETE:
       // Return a new array with all posts that don't have the id specified in the payload
       return posts.filter((post) => post._id !== action.payload);
+    case LIKE:
+      // Same logic as update
+      return posts.map((post) => (post._id === action.payload._id ? action.payload : post));
     default:
       return posts;
   }

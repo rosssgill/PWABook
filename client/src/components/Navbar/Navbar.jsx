@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Typography, Toolbar, Avatar, Button } from '@material-ui/core';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import decode from 'jwt-decode';
 
 import useStyles from './styles';
 import logo from '../../images/blog.png';
@@ -22,6 +23,13 @@ function Navbar() {
 
   useEffect(() => {
     // check for JWT if doing manual signup
+    const token = user?.token;
+
+    if (token) {
+      const decodedToken = decode(token);
+
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
     setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location]);
@@ -37,11 +45,11 @@ function Navbar() {
       <Toolbar className={classes.toolbar}>
         {user ? (
           <div className={classes.profile}>
-            <Avatar className={classes.purple} alt={user.result.given_name} src={user.result.picture}>
-              {user.result.given_name.charAt(0)}
+            <Avatar className={classes.purple} alt={user?.result.name} src={user?.result.picture}>
+              {user?.result.name.charAt(0)}
             </Avatar>
             <Typography className={classes.userName} variant="h6">
-              {user.result.name}
+              {user?.result.name}
             </Typography>
             <Button variant="contained" className={classes.logout} colour="secondary" onClick={logout}>
               Logout
