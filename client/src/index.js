@@ -11,10 +11,10 @@ import './index.css';
 
 const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  // eslint-disable-next-line prettier/prettier
-  document.getElementById('root'),
+ReactDOM.createRoot(document.querySelector('#root')).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
 );
