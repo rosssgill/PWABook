@@ -19,7 +19,7 @@ function Post({ post, setCurrentId }) {
   // Fix eslint issue
   function Likes() {
     if (post.likes.length > 0) {
-      return post.likes.find((like) => like === (user?.result?.googleId || user?.result?._id)) ? (
+      return post.likes.find((like) => like === (user?.result?.sub || user?.result?._id)) ? (
         <>
           <ThumbUpAltIcon fontSize="small" />
           &nbsp;
