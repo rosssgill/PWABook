@@ -5,9 +5,9 @@ import { configureStore } from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 
 import reducers from './reducers';
-
 import App from './App';
 import './index.css';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const store = configureStore({
   middleware: [thunk],
@@ -22,3 +22,6 @@ root.render(
     </Provider>
   </StrictMode>,
 );
+
+// Register the service worker
+serviceWorkerRegistration.register();
