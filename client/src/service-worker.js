@@ -73,7 +73,7 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
-const serverUrl = 'http://localhost:5000';
+const serverUrl = 'https://localhost:5000';
 
 // Cache any GET requests to the server
 registerRoute(
@@ -81,4 +81,51 @@ registerRoute(
   new NetworkFirst({
     cacheName: 'server-GET',
   }),
+);
+
+// Cache any GET requests to the server
+registerRoute(
+  ({ url }) => `https://${url.host}` === serverUrl,
+  new NetworkFirst({
+    cacheName: 'server-GET',
+  }),
+);
+
+// Background sync POST requests to Supabase
+const bgSyncPluginPost = new BackgroundSyncPlugin('queue-POST', {
+  maxRetentionTime: 24 * 60,
+});
+
+registerRoute(
+  ({ url }) => `https://${url.host}` === serverUrl,
+  new NetworkOnly({
+    plugins: [bgSyncPluginPost],
+  }),
+  'POST',
+);
+
+// Background sync PATCH requests to Supabase
+const bgSyncPluginPatch = new BackgroundSyncPlugin('queue-PATCH', {
+  maxRetentionTime: 24 * 60,
+});
+
+registerRoute(
+  ({ url }) => `https://${url.host}` === serverUrl,
+  new NetworkOnly({
+    plugins: [bgSyncPluginPatch],
+  }),
+  'PATCH',
+);
+
+// Background sync DELETE requests to Supabase
+const bgSyncPluginDelete = new BackgroundSyncPlugin('queue-DELETE', {
+  maxRetentionTime: 24 * 60,
+});
+
+registerRoute(
+  ({ url }) => `https://${url.host}` === serverUrl,
+  new NetworkOnly({
+    plugins: [bgSyncPluginDelete],
+  }),
+  'DELETE',
 );
