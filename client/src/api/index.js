@@ -18,3 +18,6 @@ export const likePost = (id) => API.patch(`/posts/${id}/likePost`);
 
 export const signIn = (formData) => API.post('/users/signin', formData);
 export const signUp = (formData) => API.post('/users/signup', formData);
+
+export const sendPush = () => API.post('/push');
+export const subscribe = (subscription) => API.post('/push/subscribe', subscription);

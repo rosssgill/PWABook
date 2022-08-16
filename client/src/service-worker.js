@@ -75,30 +75,6 @@ self.addEventListener('message', (event) => {
 // Any other custom service worker logic can go here.
 const serverUrl = 'https://rosspwabook.herokuapp.com';
 
-async function customReplay(message) {
-  const clients = await self.clients.matchAll();
-  for (const client of clients) {
-    // Customize this message format as you see fit.
-    client.postMessage({
-      type: 'REPLAY_SUCCESS',
-      
-    });
-  let entry;
-  while ((entry = await this.shiftRequest())) {
-    try {
-      const response = await fetch(entry.request.clone());
-      // Optional: check response.ok and throw if it's false if you
-      // want to treat HTTP 4xx and 5xx responses as retriable errors.
-    } catch (error) {
-      await this.unshiftRequest(entry);
-
-      // Throwing an error tells the Background Sync API
-      // that a retry is needed.
-      throw new Error('Replaying failed.');
-    }
-  }
-}
-
 // Cache any GET requests to the server
 registerRoute(
   ({ url }) => `https://${url.host}` === serverUrl,
@@ -153,3 +129,22 @@ registerRoute(
   }),
   'DELETE',
 );
+
+// Listening for push events
+self.addEventListener('push', (event) => {
+  console.log('Push notification received', event);
+
+  let data = { title: 'New!', content: 'Something new happened!', openUrl: '/' };
+  if (event.data) {
+    data = JSON.parse(event.data.text());
+  }
+
+  const options = {
+    body: data.content,
+    data: {
+      url: data.openUrl,
+    },
+  };
+
+  event.waitUntil(self.registration.showNotification(data.title, options));
+});

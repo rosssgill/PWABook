@@ -7,3 +7,6 @@ export const LIKE = 'LIKE';
 // AUTH REDUCER
 export const AUTH = 'AUTH';
 export const LOGOUT = 'LOGOUT';
+// PUSH REDUCER
+export const PUSH = 'PUSH';
+export const SUBSCRIBE = 'SUBSCRIBE';
