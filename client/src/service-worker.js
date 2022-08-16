@@ -73,7 +73,31 @@ self.addEventListener('message', (event) => {
 });
 
 // Any other custom service worker logic can go here.
-const serverUrl = 'https://localhost:5000';
+const serverUrl = 'https://rosspwabook.herokuapp.com';
+
+async function customReplay(message) {
+  const clients = await self.clients.matchAll();
+  for (const client of clients) {
+    // Customize this message format as you see fit.
+    client.postMessage({
+      type: 'REPLAY_SUCCESS',
+      
+    });
+  let entry;
+  while ((entry = await this.shiftRequest())) {
+    try {
+      const response = await fetch(entry.request.clone());
+      // Optional: check response.ok and throw if it's false if you
+      // want to treat HTTP 4xx and 5xx responses as retriable errors.
+    } catch (error) {
+      await this.unshiftRequest(entry);
+
+      // Throwing an error tells the Background Sync API
+      // that a retry is needed.
+      throw new Error('Replaying failed.');
+    }
+  }
+}
 
 // Cache any GET requests to the server
 registerRoute(
@@ -91,7 +115,7 @@ registerRoute(
   }),
 );
 
-// Background sync POST requests to Supabase
+// Background sync POST requests to the server
 const bgSyncPluginPost = new BackgroundSyncPlugin('queue-POST', {
   maxRetentionTime: 24 * 60,
 });
@@ -104,7 +128,7 @@ registerRoute(
   'POST',
 );
 
-// Background sync PATCH requests to Supabase
+// Background sync PATCH requests to the server
 const bgSyncPluginPatch = new BackgroundSyncPlugin('queue-PATCH', {
   maxRetentionTime: 24 * 60,
 });
@@ -117,7 +141,7 @@ registerRoute(
   'PATCH',
 );
 
-// Background sync DELETE requests to Supabase
+// Background sync DELETE requests to the server
 const bgSyncPluginDelete = new BackgroundSyncPlugin('queue-DELETE', {
   maxRetentionTime: 24 * 60,
 });
