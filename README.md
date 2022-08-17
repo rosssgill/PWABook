@@ -1,5 +1,16 @@
 # About
 This repository contains all the [client](https://github.com/rosssgill/pwabook-client) and [serverside](https://github.com/rosssgill/pwabook-server) code, included as git submodules, for my Final Year Project, PWABook, which is a full stack social media [progressive web application](https://web.dev/what-are-pwas/) built using the [MERN](https://www.mongodb.com/mern-stack) stack. The frontend application is hosted and deployed on Netlify and can be viewed [here](https://pwabook.netlify.app/). The backend express server has been deployed to [Heroku](https://www.heroku.com). Alternatively, you can install and run the application on your own machine with the steps outlined below.
+
+## Features
+- Ability to create an account or sign in through [Google Identity Services](https://developers.google.com/identity)
+- Ability to make, edit and delete your own posts
+- Ability to like others' posts
+- Ability to install the application on your mobile device
+- Utilises precaching and dynamic caching strategies to show posts even while offline
+- If a post is edited, liked or deleted while offline, the api request will be queued and executed on resuming internet connection thanks to Background Sync
+- Ability to subscribe to push notifications and get notified everytime a new post is made, even with the app closed
+
+
 # Steps to install locally
 1. Install [Node.js](https://nodejs.org/en/) v18.6. I recommend using [nvm](https://github.com/nvm-sh/nvm) to install and manage your node versions easily.
 2. Either clone this parent repository or the client and server applications separately. If you chose to clone the parent repository you may notice that the client and server are initially empty due to being [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules). To fix this, run `git submodule update --init --recursive` inside the root of the directory.
