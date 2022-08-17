@@ -1,3 +1,6 @@
 [submodule "server"]
 	path = server
 	url = git@github.com:rosssgill/pwabook-server.git
+[submodule "client"]
+	path = client
+	url = git@github.com:rosssgill/pwabook-client.git
