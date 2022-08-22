@@ -19,5 +19,5 @@ This repository contains all the [client](https://github.com/rosssgill/pwabook-c
 5. You can now run the server using `npm start`. It should say that the server is running on a port.
 6. Open a new terminal and navigate to the client directory. Inside of package.json change the url in the `proxy:` line to "http://localhost:PORT", replacing PORT with the one you set the server to listen on. Crete a .env file similar to .env.example and fill out the REACT_APP_SERVER_URL = http://localhost:PORT, replacing PORT with the one you set the server. In order to set the REACT_APP_GOOGLE_CLIENT_ID environment variable you will first need to [register an OAuth 2.0 Client ID](https://console.cloud.google.com/apis/credentials).
 7. Making sure you're in the root directory of the client, run `npm install` to install the project dependencies
-8. Run `npm start` to start the client which should automatically open it in your browser for you. If not, copy and paste the url provided in your terminal.
+8. Run `npm run buildandserve` to start the client which should automatically open it in your browser for you. If not, copy and paste the url provided in your terminal.
 9. I advise testing the application in the the latest version of google chrome since other browsers may have limited PWA feature support.
